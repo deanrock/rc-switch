@@ -1,12 +1,12 @@
 # RC switch
 How to remotely control 433MHz RC sockets or (more appropriate) how to spend TOO much time debugging random issues.
 
-# Issue
+## Issue
 * Want to turn on/off christmas lights on schedule?
 * Dont want to spend 10 EUR per Sonoff WiFi smart plug (or at least waiting few weeks for them)?
 * Have unused cheap 433 MHz RC sockets?
 
-# Approach #1
+## Approach #1
 There seems to be an open source project [pilight](https://www.pilight.org/) for controlling 433 MHz devices, with support for many many devices.
 
 However, it doesn't have any support (that I could find) for really cheap RC socket sets (maybe because there are too many of them, and they are more or less incompatible between each other?)
@@ -36,7 +36,7 @@ I've also noticed a few issues with `pilight` during the debugging:
 * Socket API is not easy to use (especially with the SSDP discovery), but thankfully there is also less documented REST API.
 * Configuring RPi GPIO is a bit cumbersome, since you need to manually specify RPi board you have in `gpio-platform` in [config file](./pilight-config.json). There is little to no mention regarding this in official documentation.
 
-# Approach #1 1/2
+## Approach #1 1/2
 So if we get the successful response only occasionally, regardless of the configuration, there must be an issue either with software (`pilight`) or hardware. Let's try by replacing the software. There were some hints that it might be related to timing issues, since remote control used the same timings for all edge transitions, and `pilight` via Arduino Nano board had some deviations between them.
 
 Since the final solution would be on RPi, let's try by using it's GPIO directly. I know that timing on RPi is problematic for some tasks, but RC transmission for this purpose doesn't have such hard requirements.
@@ -47,7 +47,7 @@ Documentation pointed me to waveform feature, which enables you to construct out
 
 `pigpio` API is straightforward, and it didn't took me long to make a [working solution](./toggle.c). Resulting timing was close to perfect, but the R/C socket wouldn't budge. Ok, so I guess transmitting is not the problem (at least not the most problematic one, anyways).
 
-# Approach #2
+## Approach #2
 Instead of relying on the `pilight-debug` output, it would seem better to observe output of 433 MHz receiver chip directly.
 
 I didn't really know what to expect, but I assumed that there would be a lot of noise on that frequency, so manually deciphering the data wouldn't be easy.
