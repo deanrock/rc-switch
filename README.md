@@ -74,6 +74,6 @@ Installing `libsigrok-dev` (and `libsigrok2` as a dependency) didn't seem to ins
 
 Ok, so now that I have a working Python library, and know what pattern to look for in the samples, it should take me a few minutes to get the results I want, right? No, nope, nein, nyet.
 
-There is no documentation apart from [Python binding reference](https://sigrok.org/api/libsigrok/unstable/bindings/python/index.html) (and coresponding C++ reference), and there is only one example [sigrok-meter](https://sigrok.org/wiki/Sigrok-meter) that I could find using the Python bindings, and it only interfaces with analog sources (which has quite different payload format than the digital sources).
+There is no documentation apart from [Python binding reference](https://sigrok.org/api/libsigrok/unstable/bindings/python/index.html) (and coresponding C++ reference), and there is only one example ([sigrok-meter](https://sigrok.org/wiki/Sigrok-meter)) that I could find using the Python bindings, and it only interfaces with analog sources (which have quite different payload format than the digital sources).
 
 With the help of this library, and source code of both the sigrok library, and sigrok program itself, I was able to get the idea of how to use the API, and correctly parse the received data. The result is in [sniffer.py](./sniffer.py), with enough comments to qualify as the best documentation for Python bindings of `libsigrok`. 😃
